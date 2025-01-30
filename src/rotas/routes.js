@@ -7,7 +7,7 @@ import uploadPicUserRoute from "./uploadPicUserRoute.js"
 const route = (app => {
     app.use(
         cors(),
-        ('./Imagens/uploads', express.static('uploads')),
+        ('/uploads', express.static('uploads')),
         express.json(),
         routeLogin,
         uploadPicUserRoute,

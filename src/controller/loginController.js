@@ -19,9 +19,9 @@ class Login {
             if(findUser){
                 return res.status(404).send("Este usuario já existe !")
             }
-            if(newUser.email.includes("@" && ".")){
-                return res.status(404).send("É necessario fornecer um email válido")
-            }
+            // if(newUser.email.includes("@" && ".")){
+            //     return res.status(404).send("É necessario fornecer um email válido")
+            // }
             const [salt, hashPassword] = criaHashESal(password).split(":")
 
             const usuarioSalvo = await criaLoginService.insereUsuarioDb( userName, salt, hashPassword, role, email ) 
