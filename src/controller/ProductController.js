@@ -1,6 +1,7 @@
 import { productCollection } from "../database/dbConnect.js";
 import ProductsService from "../services/productService.js";
 import { ObjectId } from "mongodb";
+import { v2 as cloudinary } from 'cloudinary';
 
 class ProductsController {
     constructor ( categoria, nome, preco, descricao){
@@ -81,11 +82,26 @@ class ProductsController {
 
     static async uploadItemPic (req, res) {
         try {
-            if (req.file) {
-                res.status(200).json({fileName: req.file.filename});
-            } else {
-                throw new Error("Erro ao salvar imagem");
-            }
+            cloudinary.config({ 
+                   cloud_name: 'dz0ibw0qk', 
+                   api_key: '213537456819882', 
+                   api_secret: 'kxR6tRtFPNB0qMf2Oi92jfV6r0U'
+               });
+               
+               // Upload an image
+               const imageBase64 = `data:${req.file.mimetype};base64,${req.file.buffer.toString('base64')}`;
+           
+               // Upload para o Cloudinary
+               const uploadResult = await cloudinary.uploader.upload(imageBase64, {
+                 folder: 'locationShop',
+               });
+
+               if(uploadResult.secure_url.length <= 1){
+                throw new Error ("Erro ao realizar upload da imagem")
+               }
+
+               res.status(200).json({itemPic:uploadResult.secure_url})
+           
         } catch (err) {
             res.status(404).send(err.message);
         }
