@@ -51,6 +51,20 @@ class UsuarioController {
             res.status(400).send(err.message)
         }
     }
+
+    static async findAllUsers (req, res) {
+        try{
+            const users = await usuariosColecao.find().toArray();
+            if(users.length <= 0){
+                throw new Error ("Nenhum usuario encontrado")
+            }
+            console.log(users);
+            
+            res.status(200).json(users)
+        }catch(err){
+            res.status(404).send(err.message)
+        }
+    }
 }
 
 export default UsuarioController;

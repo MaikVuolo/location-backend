@@ -9,14 +9,12 @@ const uploadDir = './Imagens/uploads';
 
 
 // Configuração do multer para upload de fotos
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, uploadDir),
-    filename: (req, file, cb) => cb(null, Date.now() + '-' + file.originalname),
-  });
+const storage = multer.memoryStorage(); // Salva os arquivos na memória
+
   
-  const upload = multer({ storage });
+const upload = multer({ storage });
 
-  route.post("/uploadItemPic", upload.single('itemPic'), ProductsController.uploadItemPic)
-  route.post('/uploadProfilePic', upload.single('profilePic'), picUpload)
+route.post("/uploadItemPic", upload.single('itemPic'), ProductsController.uploadItemPic)
+route.post('/uploadProfilePic',upload.single('profilePic'), picUpload)
 
-  export default route;
+export default route;

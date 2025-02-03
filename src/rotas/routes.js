@@ -3,6 +3,7 @@ import routeLogin from "./rotaLogin.js"
 import routeProduct from "./routesProducts.js"
 import cors from "cors"
 import uploadPicUserRoute from "./uploadPicUserRoute.js"
+import routeUsers from "./routeUsers.js"
 
 const route = (app => {
     app.use(
@@ -11,7 +12,8 @@ const route = (app => {
         express.json(),
         routeLogin,
         uploadPicUserRoute,
-        routeProduct
+        routeProduct,
+        routeUsers
     )
 })
 
