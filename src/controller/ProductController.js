@@ -1,5 +1,6 @@
-import { productCollection } from "../database/dbConnect.js";
+import { productCollection, usuariosColecao } from "../database/dbConnect.js";
 import ProductsService from "../services/productService.js";
+import UserService from "../services/userService.js";
 import { ObjectId } from "mongodb";
 import { v2 as cloudinary } from 'cloudinary';
 
@@ -191,6 +192,21 @@ class ProductsController {
             res.status(404).send(err.message)
         }
 
+    }
+
+    static async removeAllItensCart (req, res) {
+        const { userId } = req.params;
+        const idConverter = new ObjectId(userId)
+        try {
+            const result = await usuariosColecao.updateOne({_id:idConverter},{$set: {cart: []}})
+            if (result.matchedCount === 0) {
+                return res.status(404).json({ error: "Produto não encontrado." });
+            }
+            res.status(200).json({ message: "Compra finalizada com sucesso" });
+        } catch (err) {
+            console.error("Erro ao finalizar compra:", err);
+            res.status(500).json({ error: "Erro interno no servidor." });
+        }
     }
 }
 

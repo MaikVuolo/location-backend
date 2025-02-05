@@ -15,6 +15,7 @@ route.post("/removecartitem", CartController.removeItemCart)
 route.post("/cartAdd", CartController.insertProductCart)
 route.post("/addproduto", ProductsController.productInsert)
 route.put("/edititem", ProductsController.editProduct)
+route.put("/endcart/:userId", ProductsController.removeAllItensCart)
 route.delete("/removeitem/:itemId", ProductsController.removeItem)
 
 export default route;
